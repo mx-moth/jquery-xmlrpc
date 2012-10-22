@@ -4,7 +4,9 @@
 Installing
 ==========
 
-Simply include the jQuery library, and this library in your page::
+Simply include the jQuery library, and this library in your page:
+
+.. code-block:: html
 
    <script src="jquery-1.8.1.js"></script>
    <script src="jquery.xmlrpc.js"></script>
@@ -19,14 +21,16 @@ Using
 =====
 
 The ``jQuery.xmlrpc`` function is the main work-horse of this library.
-Call it like so::
+Call it like so:
+
+.. code-block:: javascript
 
    $.xmlrpc({
        url: '/RPC2',
        methodName: 'foo',
        params: ['bar', 1, 4.6, true, [1, 2, 3], {name: 'value'}],
-       success: function(response, status, jqXHR) { /* ... */ },
-       error: function(jqXHR, status, error) { /* ... */ }
+       success: function(response, status, jqXHR) { },
+       error: function(jqXHR, status, error) { }
    });
 
 It takes all of the same arguments as ``jQuery.ajax``,

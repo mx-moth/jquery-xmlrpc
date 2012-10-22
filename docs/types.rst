@@ -58,17 +58,17 @@ named after their XML-RPC equivalents, as mentioned in the above table.
 
 To force a floating point JavaScript ``Number``
 to be encoded as an ``<i8>``
-and sent as a parameter, use the following::
+and sent as a parameter, use the following:
 
-    // Force a float to be encoded as an i8
+.. code-block:: javascript
 
-    var forcedValue = $.xmlrpc.force('i8', 4.5)
+   var forcedValue = $.xmlrpc.force('i8', 4.5)
 
-    $.xmlrpc({
-        url: '/RPC2',
-        methodName: 'foo',
-        params: [forcedValue]
-    });
+   $.xmlrpc({
+       url: '/RPC2',
+       methodName: 'foo',
+       params: [forcedValue]
+   });
 
 Adding and Extending Types
 --------------------------

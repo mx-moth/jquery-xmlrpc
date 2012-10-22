@@ -74,30 +74,35 @@ It takes the following arguments:
 Example
 ~~~~~~~
 
-The JavaScript call::
+The JavaScript call:
 
-    $.xmlrpc.document('foo', ['bar, true, [1, 2, 3]]);
+.. code-block:: javascript
+   :linenos:
 
-produces the following XML document (with out the whitespace)::
+   $.xmlrpc.document('foo', ['bar, true, [1, 2, 3]]);
 
-    <methodCall>
-        <methodName>foo</methodName>
-        <params>
-            <param>
-                <value><string>bar</string></value>
-            </param>
-            <param>
-                <value><boolean>1</boolean></value>
-            </param>
-            <param>
-                <value><array><data>
-                    <value><int>1</int></value>
-                    <value><int>2</int></value>
-                    <value><int>3</int></value>
-                </data></array></value>
-            </param>
-        </params>
-    </methodCall>
+produces the following XML document (with out the whitespace):
+
+.. code-block:: xml
+
+   <methodCall>
+       <methodName>foo</methodName>
+       <params>
+           <param>
+               <value><string>bar</string></value>
+           </param>
+           <param>
+               <value><boolean>1</boolean></value>
+           </param>
+           <param>
+               <value><array><data>
+                   <value><int>1</int></value>
+                   <value><int>2</int></value>
+                   <value><int>3</int></value>
+               </data></array></value>
+           </param>
+       </params>
+   </methodCall>
 
 .. _xmlrpc-toXmlRpc:
 
@@ -129,7 +134,9 @@ It takes the following arguments:
 Example
 ~~~~~~~
 
-The following XML document::
+The following XML document:
+
+.. code-block:: xml
 
     <?xml version="1.0"?>
     <methodResponse>
@@ -155,20 +162,24 @@ The following XML document::
         </params>
     </methodResponse>
 
-parsed by::
+parsed by:
 
-    $.xmlrpc.parseDocument(doc);
+.. code-block:: javascript
 
-would result in the JSON document::
+   $.xmlrpc.parseDocument(doc);
 
-    [
-        'foo',
-        3,
-        {
-            foo: 1,
-            bar: 2
-        }
-    ]
+would result in the JSON document:
+
+.. code-block:: javascript
+
+   [
+       'foo',
+       3,
+       {
+           foo: 1,
+           bar: 2
+       }
+   ]
 
 .. _xmlrpc-parseNode:
 
@@ -187,7 +198,9 @@ It takes one argument:
 Example
 ~~~~~~~
 
-The XML element::
+The XML element:
+
+.. code-block:: xml
 
    <struct>
        <member>
@@ -200,11 +213,15 @@ The XML element::
        </member>
    </struct>
 
-would be parsed by calling::
+would be parsed by calling:
+
+.. code-block:: javascript
 
     $.xmlrpc.parseNode(node)
 
-resulting in the JSON::
+resulting in the JSON:
+
+.. code-block:: javascript
 
     {
         foo: 1,
@@ -247,35 +264,39 @@ It takes the following arguments:
 Example
 ~~~~~~~
 
-A simple boolean node::
+A simple boolean node:
 
-    // Boolean type. True == '1', False == '0'
-    makeType('boolean', true, function(value) {
-        return value ? '1' : '0';
-    }, function(text) {
-        return text == '1';
-    });
+.. code-block:: javascript
 
-A complex, custom element::
+   // Boolean type. True == '1', False == '0'
+   $.xmlrpc.makeType('boolean', true, function(value) {
+       return value ? '1' : '0';
+   }, function(text) {
+       return text == '1';
+   });
 
-    /**
+A complex, custom element:
+
+.. code-block:: javascript
+
+   /**
     * Convert
     *     {foo: 1, bar: "hello"}
     * into
     *     <custom><foo>1</foo><bar><string>hello</string></bar></custom>
     * Note the call to `$.xmlrpc.toXmlRpc`` to recursively encode the `bar` element.
     */
-    makeType('custom', false, function(value, $xml) {
-        return $xml('custom').append([
-            $xml('foo').text($.xmlrpc.toXmlRpc(value.foo, $xml)),
-            $xml('bar').text($.xmlrpc.toXmlRpc(value.foo, $xml))
-        ]);
-    }, function(node) {
-        return {
-            foo: parseInt($(node).find('> foo').text()),
-            bar: fromXmlRpc($(node).find('> bar > *').get(0)),
-        }
-    });
+   $.xmlrpc.makeType('custom', false, function(value, $xml) {
+       return $xml('custom').append([
+           $xml('foo').text($.xmlrpc.toXmlRpc(value.foo, $xml)),
+           $xml('bar').text($.xmlrpc.toXmlRpc(value.foo, $xml))
+       ]);
+   }, function(node) {
+       return {
+           foo: parseInt($(node).find('> foo').text()),
+           bar: fromXmlRpc($(node).find('> bar > *').get(0)),
+       }
+   });
 
 .. _xmlrpc-force:
 
@@ -296,12 +317,14 @@ It takes the following arguments:
 Example
 ~~~~~~~
 
-Force a float to be encoded as an i8, to send as a parameter::
+Force a float to be encoded as an i8, to send as a parameter:
 
-    var forcedValue = $.xmlrpc.force('i8', 4.5)
+.. code-block:: javascript
 
-    $.xmlrpc({
-        url: '/RPC2',
-        methodName: 'foo',
-        params: [forcedValue]
-    });
+   var forcedValue = $.xmlrpc.force('i8', 4.5)
+
+   $.xmlrpc({
+       url: '/RPC2',
+       methodName: 'foo',
+       params: [forcedValue]
+   });
