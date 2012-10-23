@@ -70,7 +70,7 @@
 		switch (type) {
 			case "undefined":
 			case "null":
-				return $('nil');
+				return types.nil.encode(item, $xml);
 
 			case "date":
 				return types['date.iso8601'].encode(item, $xml);
@@ -312,9 +312,9 @@
 	});
 
 	// Nil/null
-	xmlrpc.makeType('nil', true,
-		function() { return 'nil'; },
-		function() { return null; }
+	xmlrpc.makeType('nil', false,
+		function(val, $xml) { return $xml('nil'); },
+		function(node) { return null; }
 	);
 
 	// Structs/Objects
