@@ -219,7 +219,7 @@
 			_pad(d.getUTCMinutes()), ':', _pad(d.getUTCSeconds()), 'Z'
 		].join('');
 	}, function(text) {
-		return Date.parse(text);
+		return new Date(text);
 	});
 
 	// Go between a base64 string and an ArrayBuffer
