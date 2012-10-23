@@ -119,10 +119,7 @@
 		if ($fault.length === 0) {
 			var $params = $response.find('> params > param > value > *');
 			var json = $params.toArray().map(xmlrpc.parseNode);
-			data = {
-				error: false,
-				data: json
-			};
+			return json;
 		} else {
 			var fault = xmlrpc.parseNode($fault.find('> value > *').get(0));
 			var err = new XmlRpcFault(fault.faultString);
@@ -130,8 +127,6 @@
 			err.type = err.code = fault.faultCode;
 			throw err;
 		}
-
-		return data;
 	};
 
 	/*
