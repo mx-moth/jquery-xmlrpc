@@ -354,7 +354,8 @@
 		return $array;
 	}, function(node) {
 		var $values = $(node).find('> data > value > *');
-		return $.map($values, xmlrpc.parseNode);
+		var decoded = $values.toArray().map(xmlrpc.parseNode);
+		return decoded;
 	});
 
 
