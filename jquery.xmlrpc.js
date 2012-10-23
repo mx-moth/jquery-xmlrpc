@@ -64,6 +64,7 @@
 
 		if (item instanceof XmlRpcType) return item.toXmlRpc($xml);
 
+		var types = $.xmlrpc.types;
 		var type = $.type(item);
 
 		switch (type) {
@@ -138,8 +139,8 @@
 	*/
 	xmlrpc.parseNode = function(node) {
 		var nodename = node.nodeName.toLowerCase();
-		if (nodename in types) {
-			return types[nodename].decode(node);
+		if (nodename in xmlrpc.types) {
+			return xmlrpc.types[nodename].decode(node);
 		} else {
 			throw new Error('Unknown type ' + nodename);
 		}
@@ -147,7 +148,7 @@
 
 	var XmlRpcType = function() { };
 
-	var types = $.xmlrpc.types = {};
+	$.xmlrpc.types = {};
 
 	/**
 	* Make a XML-RPC type. We use these to encode and decode values. You can
@@ -180,7 +181,7 @@
 		Type.encode = encode;
 		Type.decode = decode;
 
-		types[tagName] = Type;
+		xmlrpc.types[tagName] = Type;
 	};
 
 
