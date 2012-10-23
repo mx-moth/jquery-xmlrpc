@@ -1,7 +1,7 @@
 {
   "name": "jquery-xmlrpc",
   "version": "0.1.0",
-  "main": "jquery.xmlrpc.js",
+  "main": ["jquery.xmlrpc.js", "jquery.xmlrpc.min.js"],
   "dependencies": {
     "jquery": "~1.8.1"
   }
