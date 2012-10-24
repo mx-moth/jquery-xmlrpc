@@ -72,6 +72,6 @@ Documentation
 
 [The full documentation can be found on Read The Docs][docs].
 
-[docs]: http://jquery-xmlrpc.rtfd.org/ Documentation
+[docs]: http://jquery-xmlrpc.rtfd.org/ "Documentation"
 [encoding]: http://jquery-xmlrpc.rtfd.org/
-	Encoding and Decoding XML-RPC Documents
+	"Encoding and Decoding XML-RPC Documents"
