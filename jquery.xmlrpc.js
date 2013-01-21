@@ -332,7 +332,7 @@
 				var $el = $(el);
 				var key = $el.find('> name').text();
 
-                // If no child elements of <value> exist, skip calling .parseNode
+				// If no child elements of <value> exist, skip calling .parseNode
 				var elementEmpty = $el.find('> value > *').length == 0;
 				var value = elementEmpty ? '' : xmlrpc.parseNode($el.find('> value > *').get(0));
 				struct[key] = value;
