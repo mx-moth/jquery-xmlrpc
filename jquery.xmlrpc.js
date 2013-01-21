@@ -147,6 +147,20 @@
 		}
 	};
 
+	/*
+	* Take a <value> node, and return the JavaScript equivalent.
+	*/
+	xmlrpc.parseValue = function(value) {
+		var child = $(value).children()[0];
+		if (child) {
+			// Child nodes should be decoded.
+			return xmlrpc.parseNode(child);
+		} else {
+			// If no child nodes, the value is a plain text node.
+			return $(value).text();
+		}
+	};
+
 	var XmlRpcType = function() { };
 
 	$.xmlrpc.types = {};
@@ -337,8 +351,7 @@
 			.reduce(function(struct, el) {
 				var $el = $(el);
 				var key = $el.find('> name').text();
-				var valueNode = $el.find('> value').children()[0];
-				var value = xmlrpc.parseNode(valueNode);
+				var value = xmlrpc.parseValue($el.find('> value'));
 
 				struct[key] = value;
 				return struct;
@@ -357,8 +370,7 @@
 		return $array;
 	}, function(node) {
 		return $(node).find('> data > value').toArray()
-			.map(function(el) { return $(el).children()[0]; })
-			.map(xmlrpc.parseNode);
+			.map(xmlrpc.parseValue);
 	});
 
 
