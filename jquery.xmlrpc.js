@@ -133,6 +133,12 @@
 	* Take an XML-RPC node, and return the JavaScript equivalent
 	*/
 	xmlrpc.parseNode = function(node) {
+
+		// Some XML-RPC services return empty <value /> elements. This is not
+		// legal XML-RPC, but we may as well handle it.
+		if (node === undefined) {
+			return null;
+		}
 		var nodename = node.nodeName.toLowerCase();
 		if (nodename in xmlrpc.types) {
 			return xmlrpc.types[nodename].decode(node);
@@ -331,10 +337,9 @@
 			.reduce(function(struct, el) {
 				var $el = $(el);
 				var key = $el.find('> name').text();
+				var valueNode = $el.find('> value').children()[0];
+				var value = xmlrpc.parseNode(valueNode);
 
-				// If no child elements of <value> exist, skip calling .parseNode
-				var elementEmpty = $el.find('> value > *').length == 0;
-				var value = elementEmpty ? '' : xmlrpc.parseNode($el.find('> value > *').get(0));
 				struct[key] = value;
 				return struct;
 			}, {});
@@ -351,9 +356,9 @@
 		$array.append($data);
 		return $array;
 	}, function(node) {
-		var $values = $(node).find('> data > value > *');
-		var decoded = $values.toArray().map(xmlrpc.parseNode);
-		return decoded;
+		return $(node).find('> data > value').toArray()
+			.map(function(el) { return $(el).children()[0]; })
+			.map(xmlrpc.parseNode);
 	});
 
 
