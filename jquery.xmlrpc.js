@@ -331,7 +331,10 @@
 			.reduce(function(struct, el) {
 				var $el = $(el);
 				var key = $el.find('> name').text();
-				var value = xmlrpc.parseNode($el.find('> value > *').get(0));
+
+				// If no child elements of <value> exist, skip calling .parseNode
+				var elementEmpty = $el.find('> value > *').length == 0;
+				var value = elementEmpty ? $el.find('> value').get(0).textContent : xmlrpc.parseNode($el.find('> value > *').get(0));
 				struct[key] = value;
 				return struct;
 			}, {});
@@ -349,6 +352,11 @@
 		return $array;
 	}, function(node) {
 		var $values = $(node).find('> data > value > *');
+		// If no child elements are found, use the element values
+		if ($values.length == 0) {
+		    var value = $(node).find('> data > value').map(function (index, el) { return el.textContent; });
+		    return value.toArray();
+		}
 		var decoded = $values.toArray().map(xmlrpc.parseNode);
 		return decoded;
 	});
