@@ -1,0 +1,28 @@
+{
+	"name": "xmlrpc",
+	"version": "0.2.0",
+	"title": "XML-RPC over AJAX",
+	"description": "Interact with remote XML-RPC services using AJAX",
+	"author": {
+		"name": "Tim Heap",
+		"email": "heap.tim@gmail.com",
+		"url": "http://timheap.me"
+	},
+	"licenses": [
+		{
+			"type": "Unlicense",
+			"url": "http://unlicense.org/"
+		}
+	],
+	"dependencies": {
+		"jquery": ">1.8.0"
+	},
+	"keywords": [
+		"xmlrpc", "xml-rpc",
+		"ajax",
+		"xml",
+		"remote-service"
+	],
+	"homepage": "https://github.com/maelstrom/jquery-xmlrpc",
+	"docs": "http://jquery-xml-rpc.readthedocs.org/"
+}
