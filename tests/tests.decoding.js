@@ -69,6 +69,19 @@
 			)),
 			[1, [2]],
 			"Array containing array encodes");
+
+		// Empty <value> elements are technically not valid XML-RPC, but they appear
+		// in the wild.
+		deepEqual(
+			$.xmlrpc.parseNode(el(
+				'<array><data>' +
+					'<value><int>1</int></value>' +
+					'<value></value>' +
+					'<value><string>hello</string></value>' +
+				'</data></array>'
+			)),
+			[1, null, 'hello'],
+			"Array containing empty <value> parses to null");
 	});
 
 	test("Struct decoding", function($xml) {
@@ -108,7 +121,22 @@
 					'</member>' +
 				'</struct>')),
 			{foo: 4, bar: {baz: 5}},
-			"struct containing struct encodes");
+			"struct containing struct decodes");
+
+		deepEqual(
+			$.xmlrpc.parseNode(el(
+				'<struct>' +
+					'<member>' +
+						'<name>notEmpty</name>' +
+						'<value><i4>4</i4></value>' +
+					'</member>' +
+					'<member>' +
+						'<name>empty</name>' +
+						'<value></value>' +
+					'</member>' +
+				'</struct>')),
+			{notEmpty: 4, empty: null},
+			"Struct with empty <value> decodes");
 	});
 
 })();
