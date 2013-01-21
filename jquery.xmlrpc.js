@@ -87,9 +87,9 @@
 			case "number":
 				// Ints and Floats encode differently
 				if (_isInt(item)) {
-					return types.int.encode(item, $xml);
+					return types['int'].encode(item, $xml);
 				} else {
-					return types.double.encode(item, $xml);
+					return types['double'].encode(item, $xml);
 				}
 				break;
 
