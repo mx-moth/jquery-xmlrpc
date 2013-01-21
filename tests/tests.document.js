@@ -80,6 +80,84 @@
 			[4, [1, [2]]],
 			"Can parse a complex response");
 
+
+		deepEqual(
+			$.xmlrpc.parseDocument(d(
+				'<?xml version="1.0"?>' +
+				'<methodResponse>' +
+				'<params><param><value><array><data><value>' +
+					'<struct>' +
+						'<member>' +
+							'<name>isCreator</name>' +
+							'<value>' +
+								'<boolean>1</boolean>' +
+							'</value>' +
+						'</member>' +
+						'<member>' +
+							'<name>originalStationId</name>' +
+							'<value>12345</value>' +
+						'</member>' +
+					'</struct>' +
+				'</value></data></array></value></param></params>' +
+				'</methodResponse>')),
+			[[{"isCreator":true,"originalStationId":"12345"}]],
+			"Can parse text only value elements");
+
+		deepEqual(
+			$.xmlrpc.parseDocument(d(
+				'<?xml version="1.0"?>' +
+				'<methodResponse>' +
+				'<params><param><value><array><data><value>' +
+					'<struct>' +
+						'<member>' +
+							'<name>isCreator</name>' +
+							'<value>' +
+								'<boolean>1</boolean>' +
+							'</value>' +
+						'</member>' +
+						'<member>' +
+							'<name>originalStationId</name>' +
+							'<value></value>' +
+						'</member>' +
+					'</struct>' +
+				'</value></data></array></value></param></params>' +
+				'</methodResponse>')),
+			[[{"isCreator":true,"originalStationId":""}]],
+			"Can parse empty value elements");
+
+		deepEqual(
+			$.xmlrpc.parseDocument(d(
+				'<?xml version="1.0"?>' +
+				'<methodResponse>' +
+				'<params><param><value><array><data><value>' +
+					'<struct>' +
+						'<member>' +
+							'<name>isCreator</name>' +
+							'<value>' +
+								'<boolean>1</boolean>' +
+							'</value>' +
+						'</member>' +
+						'<member>' +
+							'<name>originalStationId</name>' +
+							'<value>xxx</value>' +
+						'</member>' +
+						'<member>' +
+							'<name>arrayExample</name>' +
+							'<value>' +
+								'<array>' +
+									'<data>' +
+										'<value>12345</value>' +
+										'<value>67890</value>' +
+									'</data>' +
+								'</array>' +
+							'</value>' +
+						'</member>' +
+					'</struct>' +
+				'</value></data></array></value></param></params>' +
+				'</methodResponse>')),
+			[[{"isCreator":true,"originalStationId":"xxx","arrayExample":["12345","67890"]}]],
+			"Can parse value arrays");
+
 	});
 
 	test("Handling errors", 5, function() {
