@@ -70,18 +70,17 @@
 			[1, [2]],
 			"Array containing array encodes");
 
-		// Empty <value> elements are technically not valid XML-RPC, but they appear
-		// in the wild.
+		// Childless value nodes should be treated like string nodes
 		deepEqual(
 			$.xmlrpc.parseNode(el(
 				'<array><data>' +
-					'<value><int>1</int></value>' +
+					'<value><string>String node</string></value>' +
 					'<value></value>' +
-					'<value><string>hello</string></value>' +
+					'<value>Raw value string</value>' +
 				'</data></array>'
 			)),
-			[1, null, 'hello'],
-			"Array containing empty <value> parses to null");
+			["String node", "", "Raw value string"],
+			"Array containing childless <value> nodes parses correctly");
 	});
 
 	test("Struct decoding", function($xml) {
@@ -127,16 +126,24 @@
 			$.xmlrpc.parseNode(el(
 				'<struct>' +
 					'<member>' +
-						'<name>notEmpty</name>' +
-						'<value><i4>4</i4></value>' +
+						'<name>stringNode</name>' +
+						'<value><string>String node</string></value>' +
 					'</member>' +
 					'<member>' +
-						'<name>empty</name>' +
+						'<name>emptyValue</name>' +
 						'<value></value>' +
 					'</member>' +
+					'<member>' +
+						'<name>rawStringValue</name>' +
+						'<value>Raw string value</value>' +
+					'</member>' +
 				'</struct>')),
-			{notEmpty: 4, empty: null},
-			"Struct with empty <value> decodes");
+			{
+				stringNode: "String node",
+				emptyValue: "",
+				rawStringValue: "Raw string value"
+			},
+			"Struct with childless <value> nodes parses correctly");
 	});
 
 })();
