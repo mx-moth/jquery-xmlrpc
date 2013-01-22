@@ -1,5 +1,5 @@
 /*jshint browser:true */
-/*globals Base64Binary */
+/*global jQuery */
 (function($) {
 	"use strict";
 
@@ -11,7 +11,7 @@
 
 	var xmlrpc = $.xmlrpc = function(url, settings) {
 
-		if (arguments.length == 2) {
+		if (arguments.length === 2) {
 			settings.url = url;
 		} else {
 			settings = url;
@@ -62,7 +62,9 @@
 	*/
 	xmlrpc.toXmlRpc = function(item, $xml) {
 
-		if (item instanceof XmlRpcType) return item.toXmlRpc($xml);
+		if (item instanceof XmlRpcType) {
+			return item.toXmlRpc($xml);
+		}
 
 		var types = $.xmlrpc.types;
 		var type = $.type(item);
@@ -113,7 +115,6 @@
 	xmlrpc.parseDocument = function(doc) {
 		var $doc = $(doc);
 		var $response = $doc.children('methodresponse');
-		var data;
 
 		var $fault = $response.find('> fault');
 		if ($fault.length === 0) {
@@ -188,7 +189,7 @@
 
 	// Number types
 	var _fromInt = function(value) { return '' + Math.floor(value); };
-	var _toInt = function(text, node) { return parseInt(text, 10); };
+	var _toInt = function(text, _) { return parseInt(text, 10); };
 
 	xmlrpc.makeType('int', true, _fromInt, _toInt),
 	xmlrpc.makeType('i4', true, _fromInt, _toInt),
@@ -207,7 +208,7 @@
 	xmlrpc.makeType('boolean', true, function(value) {
 		return value ? '1' : '0';
 	}, function(text) {
-		return text == '1';
+		return text === '1';
 	});
 
 	// Dates are a little trickier
@@ -277,8 +278,8 @@
 
 				// Work out the length of the data, accommodating for padding
 				var abLen = (base64Len / 4) * 3;
-				if (base64.charAt(base64Len - 1) == pad) abLen--;
-				if (base64.charAt(base64Len - 2) == pad) abLen--;
+				if (base64.charAt(base64Len - 1) === pad) { abLen--; }
+				if (base64.charAt(base64Len - 2) === pad) { abLen--; }
 
 				// Make the ArrayBuffer, and an Int8Array to work with it
 				var ab = new ArrayBuffer(abLen);
@@ -315,7 +316,7 @@
 	// Nil/null
 	xmlrpc.makeType('nil', false,
 		function(val, $xml) { return $xml('nil'); },
-		function(node) { return null; }
+		function(_) { return null; }
 	);
 
 	// Structs/Objects
