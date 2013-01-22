@@ -1,6 +1,6 @@
 {
 	"name": "xmlrpc",
-	"version": "0.2.1",
+	"version": "0.3.0",
 	"title": "XML-RPC over AJAX",
 	"description": "Interact with remote XML-RPC services using AJAX",
 	"author": {
