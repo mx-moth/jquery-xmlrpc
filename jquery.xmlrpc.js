@@ -238,6 +238,14 @@
 		return new Date(text);
 	});
 
+     // dateTimes No conversion is needed
+     xmlrpc.makeType('datetime.iso8601', true, function(d) {
+             return d;
+     }, function(text) {
+             return text;
+     });
+
+
 	// Go between a base64 string and an ArrayBuffer
 	xmlrpc.binary = (function() {
 		var pad = '=';
