@@ -44,9 +44,9 @@
 
 		var timestamp = 1350943077000;
 		var datestring = "2012-10-22T21:57:57Z";
-		var dateNode = el('<date.iso8601>' + datestring + '</date.iso8601>');
+		var dateNode = el('<dateTime.iso8601>' + datestring + '</dateTime.iso8601>');
 		equal($.xmlrpc.parseNode(dateNode).getTime(), timestamp,
-			"<date.iso8601> node decodes");
+			"<dateTime.iso8601> node decodes");
 	});
 
 	test("Array decoding", function($xml) {

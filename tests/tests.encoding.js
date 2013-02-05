@@ -63,8 +63,8 @@
 		var datestring = "2012-10-22T21:57:57Z";
 		var date = new Date();
 		date.setTime(timestamp);
-		deepEqual(types['date.iso8601'].encode(date, $xml), $xml('date.iso8601').text(datestring),
-			"Date encodes to <date.iso8601>...</date.iso8601>");
+		deepEqual(types['datetime.iso8601'].encode(date, $xml), $xml('dateTime.iso8601').text(datestring),
+			"Date encodes to <dateTime.iso8601>...</dateTime.iso8601>");
 
 	}));
 
@@ -109,8 +109,8 @@
 		ok($.xmlrpc.toXmlRpc("Hello", $xml).is('string'),
 			"String guessed to be <string>");
 
-		ok($.xmlrpc.toXmlRpc(new Date(), $xml).is('date\\.iso8601'),
-			"Date guessed to be <date.iso8601>");
+		ok($.xmlrpc.toXmlRpc(new Date(), $xml).is('dateTime\\.iso8601'),
+			"Date guessed to be <dateTime.iso8601>");
 
 		ok($.xmlrpc.toXmlRpc({foo: 'bar'}, $xml).is('struct'),
 			"Object guessed to be <struct>");

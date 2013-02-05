@@ -75,7 +75,7 @@
 				return types.nil.encode(item, $xml);
 
 			case "date":
-				return types['date.iso8601'].encode(item, $xml);
+				return types['datetime.iso8601'].encode(item, $xml);
 
 			case "object":
 				if (item instanceof ArrayBuffer) {
@@ -197,7 +197,7 @@
 		Type.encode = encode;
 		Type.decode = decode;
 
-		xmlrpc.types[tagName] = Type;
+		xmlrpc.types[tagName.toLowerCase()] = Type;
 	};
 
 
@@ -228,7 +228,7 @@
 	// Dates are a little trickier
 	var _pad = function(n) { return n<10 ? '0'+n : n; };
 
-	xmlrpc.makeType('date.iso8601', true, function(d) {
+	xmlrpc.makeType('dateTime.iso8601', true, function(d) {
 		return [
 			d.getUTCFullYear(), '-', _pad(d.getUTCMonth()+1), '-',
 			_pad(d.getUTCDate()), 'T', _pad(d.getUTCHours()), ':',
