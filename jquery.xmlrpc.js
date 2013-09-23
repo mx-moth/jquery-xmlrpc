@@ -23,7 +23,7 @@
 		settings.contentType = 'text/xml';
 		settings.converters = {'xml json': xmlrpc.parseDocument};
 
-		var xmlDoc = xmlrpc.document(settings.methodName, settings.params);
+		var xmlDoc = xmlrpc.document(settings.methodName, settings.params || []);
 		var serializer = new XMLSerializer();
 
 		settings.data = serializer.serializeToString(xmlDoc);
@@ -205,11 +205,11 @@
 	var _fromInt = function(value) { return '' + Math.floor(value); };
 	var _toInt = function(text, _) { return parseInt(text, 10); };
 
-	xmlrpc.makeType('int', true, _fromInt, _toInt),
-	xmlrpc.makeType('i4', true, _fromInt, _toInt),
-	xmlrpc.makeType('i8', true, _fromInt, _toInt),
-	xmlrpc.makeType('i16', true, _fromInt, _toInt),
-	xmlrpc.makeType('i32', true, _fromInt, _toInt),
+	xmlrpc.makeType('int', true, _fromInt, _toInt);
+	xmlrpc.makeType('i4', true, _fromInt, _toInt);
+	xmlrpc.makeType('i8', true, _fromInt, _toInt);
+	xmlrpc.makeType('i16', true, _fromInt, _toInt);
+	xmlrpc.makeType('i32', true, _fromInt, _toInt);
 
 	xmlrpc.makeType('double', true, String, function(text) {
 		return parseFloat(text, 10);
