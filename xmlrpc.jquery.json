@@ -20,6 +20,6 @@
 		"xml",
 		"remote-service"
 	],
-	"homepage": "https://github.com/maelstrom/jquery-xmlrpc",
+	"homepage": "https://github.com/timheap/jquery-xmlrpc",
 	"docs": "http://jquery-xml-rpc.readthedocs.org/"
 }
