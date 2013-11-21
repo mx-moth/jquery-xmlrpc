@@ -32,10 +32,35 @@
 	};
 
 	/**
+	* Make an XML document node.
+	*/
+	xmlrpc.createXMLDocument = function () {
+
+		if (document.implementation && "createDocument" in document.implementation) {
+			// Most browsers support createDocument
+			return document.implementation.createDocument(null, null, null);
+
+		} else {
+			// IE uses ActiveXObject instead of the above.
+			var i, length, activeX = [
+				"MSXML6.DomDocument", "MSXML3.DomDocument",
+				"MSXML2.DomDocument", "MSXML.DomDocument", "Microsoft.XmlDom"
+			];
+			for (i = 0, length = activeX.length; i < length; i++) {
+				try {
+					return new ActiveXObject(activeX[i]);
+				} catch(_) {}
+			}
+		}
+	};
+
+	/**
 	* Make an XML-RPC document from a method name and a set of parameters
 	*/
 	xmlrpc.document = function(name, params) {
-		var doc = document.implementation.createDocument(null, null, null);
+		var doc = xmlrpc.createXMLDocument();
+
+
 		var $xml = function(name) {
 			return $(doc.createElement(name));
 		};
