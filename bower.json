@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "main": ["jquery.xmlrpc.js", "jquery.xmlrpc.min.js"],
   "dependencies": {
-    "jquery": "~1.10.2"
+    "jquery": "~1.10.2",
+    "jquery-mockjax": "~1.5.3"
   }
 }
