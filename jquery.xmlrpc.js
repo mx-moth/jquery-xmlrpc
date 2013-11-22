@@ -24,9 +24,13 @@
 		settings.converters = {'xml json': xmlrpc.parseDocument};
 
 		var xmlDoc = xmlrpc.document(settings.methodName, settings.params || []);
-		var serializer = new XMLSerializer();
 
-		settings.data = serializer.serializeToString(xmlDoc);
+		if ("XMLSerializer" in window) {
+			settings.data = new window.XMLSerializer().serializeToString(xmlDoc);
+		} else {
+			// IE does not have XMLSerializer
+			settings.data = xmlDoc.xml;
+		}
 
 		return $.ajax(settings);
 	};
