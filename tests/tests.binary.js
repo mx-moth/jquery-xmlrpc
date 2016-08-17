@@ -67,6 +67,13 @@
 			"Base64 string decoded into ArrayBuffer");
 	});
 
+	test("base64 decoding with spaces", function() {
+		abEqual(
+			$.xmlrpc.binary.fromBase64("AQI\nDB\nAU="),
+			makeArrayBuffer([1, 2, 3, 4, 5]),
+			"Base64 string with whitespace decoded into ArrayBuffer");
+	});
+
 	test("base64 round trip", function() {
 		var max = 20, low, high;
 		for (low = 0; low < max; low++) {

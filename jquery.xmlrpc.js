@@ -317,6 +317,10 @@
 			},
 
 			fromBase64: function(base64) {
+				// Some implementations break a b64 string up with whitespace
+				// or new lines. Strip any whitespace out before continuing.
+				base64 = base64.replace(/\s/g, '');
+
 				var base64Len = base64.length;
 
 				// Work out the length of the data, accommodating for padding
